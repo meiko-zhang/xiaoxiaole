@@ -1,0 +1,173 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+    position: relative;
+    min-height: 100vh;
+}
+
+h1 {
+    color: #333;
+}
+
+.game-stats {
+    display: flex;
+    justify-content: space-around;
+    width: 420px; /* Match game board width */
+    margin-bottom: 15px;
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.stat-container {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.stat-container span {
+    display: block;
+}
+
+.stat-container span:first-child {
+    font-weight: bold;
+    color: #555;
+}
+
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(9, 50px);
+    grid-template-rows: repeat(9, 50px);
+    gap: 5px;
+    background-color: #ccc;
+    border: 5px solid #ccc;
+    border-radius: 10px;
+    padding: 5px;
+    position: relative;
+}
+
+#message-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    text-align: center;
+}
+
+#message-box.hidden {
+    display: none;
+}
+
+#message-text {
+    color: white;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#message-button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+.cell {
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    cursor: grab;
+    user-select: none; /* Prevent text selection */
+    transition: transform 0.3s ease, top 0.5s ease;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.cell:active {
+    cursor: grabbing;
+}
+
+.cell .fruit {
+    z-index: 2;
+    transition: transform 0.2s;
+    pointer-events: none; /* Make sure drag events are captured by the cell */
+}
+
+.cell.special-line-h .fruit,
+.cell.special-line-v .fruit {
+    animation: glow 1.5s infinite alternate;
+}
+
+.cell.special-bomb .fruit {
+    animation: pulse 1s infinite alternate;
+}
+
+.cell.special-color .fruit {
+    animation: rainbow 2s linear infinite;
+}
+
+.cell.hidden {
+    background-color: transparent;
+    border: none;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.cell.pop .fruit {
+    animation: pop 0.3s ease forwards;
+}
+
+.cell.fall .fruit {
+    animation: fall 0.5s ease forwards;
+}
+
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(0); }
+}
+
+@keyframes fall {
+    from { transform: translateY(-100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6; }
+    to { text-shadow: 0 0 10px #fff, 0 0 20px #0073e6, 0 0 30px #0073e6; }
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+@keyframes rainbow {
+    0% { color: #ff0000; }
+    15% { color: #ff7f00; }
+    30% { color: #ffff00; }
+    45% { color: #00ff00; }
+    60% { color: #0000ff; }
+    75% { color: #4b0082; }
+    90% { color: #8f00ff; }
+    100% { color: #ff0000; }
+}
